@@ -45,7 +45,7 @@ INSERT INTO estudiante VALUES (
 );
 
 INSERT INTO estudiante (
-  matricula, paterno, materno, nombres, colonia,
+  matricula, paterno, materno, nombres, direccion,
   telefono, fecha_nacimiento, fecha_inscripcion, edad
 ) VALUES
 ('s24016721', 'chable',   'elton',     'katia julissa', 'Peloteros',             '9225550001', '2006-10-04', '2024-08-21', 17),
@@ -173,6 +173,8 @@ INSERT INTO estudiante (matricula, paterno, materno, nombres, direccion, telefon
 ('s24016702','zapata','gallegos','alexa kahely','Señora de lourdes','9212238991','2005-05-27','F'),
 ('s24022201','aragon','martinez','jose angel','Las Gaviotas','9211423817','2006-11-17','M');
 
+
+--AGREGAR COLUMNA CORREO !!
 UPDATE estudiante
 SET correo = CASE matricula
     WHEN 's24016698' THEN 'maikycamiagle11@gmail.com'
@@ -299,7 +301,11 @@ INSERT INTO grupo (matricula, materia_id) VALUES
 ('s24022201', 2),
 ('s23017375', 3),
 ('s23017372', 4),
-('s24016699', 5)
+('s24016699', 5),
+('s24016730',6),
+('s24022198',7),
+('s24016734',2),
+('s23017355',1)
 ;
 
 ALTER TABLE grupo ADD CONSTRAINT pk_grupo PRIMARY KEY(matricula,materia_id);
