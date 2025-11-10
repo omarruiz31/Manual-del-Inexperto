@@ -10,6 +10,7 @@ CREATE TABLE estudiante (
     edad INT NOT NULL
 );
 
+--Primer registro
 INSERT INTO estudiante VALUES (
 's23017364',
 'Ruiz',
@@ -44,6 +45,8 @@ INSERT INTO estudiante VALUES (
   19
 );
 
+
+--7 estudiantes mas
 INSERT INTO estudiante (
   matricula, paterno, materno, nombres, direccion,
   telefono, fecha_nacimiento, fecha_inscripcion, edad
@@ -63,8 +66,9 @@ ALTER TABLE estudiante ALTER COLUMN fecha_inscripcion SET DEFAULT CURRENT_DATE;
 INSERT INTO estudiante (matricula,paterno,materno,nombres,direccion,telefono,fecha_nacimiento,edad) VALUES (
 's24016734','ritt','martinez','diana jahret','Adolfo Lopez Mateos','9212332173','2006-09-04',19);
 
-ALTER TABLE estudiante
-ADD COLUMN correo VARCHAR(100);
+
+--19. Modifique la tabla estudiante, agregue el campo correo
+ALTER TABLE estudiante ADD COLUMN correo VARCHAR(50);
 
 UPDATE estudiante
 SET correo = CASE matricula
@@ -86,14 +90,12 @@ WHERE matricula IN (
 );
 
 ALTER TABLE estudiante DROP COLUMN edad;
-
-ALTER TABLE tabla
-ADD COLUMN edad int GENERATED ALWAYS AS (EXTRACT(YEAR FROM age(fecha_nacimiento))) STORED;
-
+/*
 ALTER TABLE estudiante
 ADD COLUMN edad INT GENERATED ALWAYS AS (
   EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_nacimiento))
 ) STORED;
+*/
 
 
 CREATE TABLE materia (
@@ -121,10 +123,24 @@ INSERT INTO materia (materia, creditos) VALUES
 ('Pensamiento', 5),
 ('Arquitectura de Computadoras', 8);
 
+
+/* checar esto
+DELETE FROM materia;
+
+DROP TABLE materia;
+
+\i 'Users/omarruiz/Desktop/'
+*/
+
 ALTER TABLE estudiante ADD COLUMN sexo char(1) DEFAULT 'M';
 
 UPDATE estudiante SET sexo = 'F' WHERE matricula IN ('s24016721','s24016716','s24016734','S24016711');
 
+ALTER TABLE materia RENAME to materias;
+ALTER TABLE materias RENAME to materia;
+
+
+--Practica 3
 
 
 
@@ -174,7 +190,6 @@ INSERT INTO estudiante (matricula, paterno, materno, nombres, direccion, telefon
 ('s24022201','aragon','martinez','jose angel','Las Gaviotas','9211423817','2006-11-17','M');
 
 
---AGREGAR COLUMNA CORREO !!
 UPDATE estudiante
 SET correo = CASE matricula
     WHEN 's24016698' THEN 'maikycamiagle11@gmail.com'
@@ -256,6 +271,13 @@ INSERT INTO estudiante (
 );
 
 
+--Practica 4
+
+CREATE TABLE grupo (
+    matricula VARCHAR(9),
+    materia_id INT NOT NULL
+);  
+
 INSERT INTO grupo (matricula, materia_id) VALUES
 ('s24016698', 1),
 ('s24016725', 2),
@@ -320,6 +342,19 @@ ON DELETE CASCADE;
 
 DELETE FROM estudiante
 WHERE matricula = 's24016725';
+
+ALTER TABLE grupo ADD CONSTRAINT fk_grupo_materia FOREIGN KEY(materia_id) REFERENCES materia(materia_id);
+
+ALTER TABLE grupo DROP CONSTRAINT fk_grupo_materia;
+
+ALTER TABLE grupo ADD CONSTRAINT fk_grupo_materia FOREIGN KEY(materia_id) REFERENCES materia(materia_id)
+ON DELETE CASCADE;
+
+DELETE FROM materia WHERE materia_id = 10;
+
+ALTER TABLE grupo ADD COLUMN calificacion INT;
+
+UPDATE grupo SET calificacion = FLOOR(random() *10) +1;
 
 
 
